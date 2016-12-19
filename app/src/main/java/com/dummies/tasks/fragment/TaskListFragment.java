@@ -3,6 +3,8 @@ package com.dummies.tasks.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,7 @@ import com.dummies.tasks.R;
  * A simple {@link Fragment} subclass.
  */
 public class TaskListFragment extends Fragment {
+    RecyclerView recyclerView;
 
 
     public TaskListFragment() {
@@ -23,8 +26,17 @@ public class TaskListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        final View v = inflater.inflate(R.layout.fragment_task_list2, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(getActivity())
+        );
+        return v;
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list2, container, false);
+        //return inflater.inflate(R.layout.fragment_task_list2, container, false);
     }
+
 
 }
