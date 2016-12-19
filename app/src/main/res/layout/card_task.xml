@@ -4,7 +4,16 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="100dp"
+    android:layout_marginTop="@dimen/task_card_half_spacing"
+    android:layout_marginBottom="@dimen/task_card_half_spacing"
+    android:layout_marginStart="@dimen/gutter"
+    android:layout_marginEnd="@dimen/gutter"
+    android:layout_gravity="center"
+    android:elevation="@dimen/task_card_elevation"
+    android:foreground="?android:attr/selectableItemBackground"
+
+    card_view:cardCornerRadius="0dp" >
 
     <RelativeLayout
         android:layout_width="match_parent"

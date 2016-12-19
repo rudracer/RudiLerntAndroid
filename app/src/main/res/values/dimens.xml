@@ -3,4 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Steg links und rechts auf den meisten unserer Seiten -->
+    <dimen name="gutter">10dp</dimen>
+
+    <!--Halber Abstand zwischen den Task-Karten. Der volle Abstand verdoppelt diese Zahl. -->
+    <dimen name="task_card_half_spacing">5dp</dimen>
+
+    <!--Hervorhebung unserer Task-Karten -->
+    <dimen name="task_card_elevation">6dp</dimen>
+
 </resources>
