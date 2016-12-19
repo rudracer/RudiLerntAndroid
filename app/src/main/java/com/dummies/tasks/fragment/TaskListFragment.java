@@ -10,16 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.dummies.tasks.R;
+import com.dummies.tasks.adapter.TaskListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class TaskListFragment extends Fragment {
     RecyclerView recyclerView;
+    TaskListAdapter adapter;
 
 
     public TaskListFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        adapter = new TaskListAdapter();
     }
 
 
@@ -28,6 +36,7 @@ public class TaskListFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fragment_task_list2, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler);
+        recyclerView.setAdapter(adapter);
 
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(
