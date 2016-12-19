@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+
+import com.dummies.tasks.R;
 //import android.R;
 
 /**
