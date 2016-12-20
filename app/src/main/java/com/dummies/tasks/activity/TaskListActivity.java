@@ -19,6 +19,7 @@ public class TaskListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_task_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //toolbar.setTitle("Hallo");
         //setActionBar ((android.widget.Toolbar) findViewById(R.id.toolbar));
     }
 
