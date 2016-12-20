@@ -1,11 +1,13 @@
 package com.dummies.tasks.adapter;
 
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.TextView;
+import android.widget.FrameLayout;
 
 import com.dummies.tasks.R;
 //import android.R;
@@ -27,9 +29,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int i) {
         //eine neue View erstellen
-        View v = (View) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_task, parent, false);
+         CardView v = (CardView) LayoutInflater.from(parent.getContext()).inflate(R.layout.card_task, parent, false);
 
-        return new ViewHolder((AdapterView) v);
+        return new ViewHolder(v);
     }
 
     @Override
@@ -43,10 +45,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        AdapterView cardView;
+        CardView cardView;
         TextView titleView;
 
-        public ViewHolder (AdapterView card) {
+        public ViewHolder (CardView card) {
             super(card);
             cardView = card;
             titleView = (TextView)card.findViewById(R.id.text1);
