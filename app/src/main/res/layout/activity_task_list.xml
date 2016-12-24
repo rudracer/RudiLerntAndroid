@@ -9,7 +9,8 @@
         style="?android:actionBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:title="@+id/toolbar"  />
+        android:title="@string/app_name"
+        android:id="@+id/toolbar"/>
 
     <fragment
         android:layout_width="match_parent"
