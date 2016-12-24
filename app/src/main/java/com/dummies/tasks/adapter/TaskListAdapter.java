@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout;
 
 import com.dummies.tasks.R;
+import com.dummies.tasks.interfaces.OnEditTask;
 import com.squareup.picasso.Picasso;
 //import android.R;
 
