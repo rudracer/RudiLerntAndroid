@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
  */
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHolder> {
-    static String[] fakeData = new String[] {
+    private static String[] fakeData = new String[] {
             "Eins",
             "Zwei",
             "Drei",
@@ -49,8 +49,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 .into(viewHolder.imageView);
     }
 
-    public static String getImageUrlForTask(long taskId) {
-        return "http://lorempixel.com/600/400/cats/?fakeId=" + taskId;
+    private static String getImageUrlForTask(long taskId) {
+        return "http://lorempixel.com/600/400/cats/" + taskId%10;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         TextView titleView;
         ImageView imageView;
 
-        public ViewHolder (CardView card) {
+        ViewHolder(CardView card) {
             super(card);
             cardView = card;
             titleView = (TextView)card.findViewById(R.id.text1);
