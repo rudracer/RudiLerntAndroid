@@ -17,10 +17,8 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar); //0x7f0c006d = 2131492973
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
-        //toolbar.setTitle("Hallo");
-        //setActionBar ((android.widget.Toolbar) findViewById(R.id.toolbar));
     }
 
 
