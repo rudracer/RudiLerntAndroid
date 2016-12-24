@@ -1,15 +1,18 @@
 package com.dummies.tasks.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.FrameLayout;
 
 import com.dummies.tasks.R;
+import com.squareup.picasso.Picasso;
 //import android.R;
 
 /**
@@ -36,7 +39,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
+        Context context = viewHolder.titleView.getContext();
+
         viewHolder.titleView.setText(fakeData[i]);
+
+        //Miniaturbild festlegen
+        Picasso.with(context)
+                .load(getImageUrlForTask(i))
+                .into(viewHolder.imageView);
+    }
+
+    public static String getImageUrlForTask(long taskId) {
+        return "http://lorempixel.com/600/400/cats/?fakeId=" + taskId;
     }
 
     @Override
@@ -47,11 +61,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView titleView;
+        ImageView imageView;
 
         public ViewHolder (CardView card) {
             super(card);
             cardView = card;
             titleView = (TextView)card.findViewById(R.id.text1);
+            imageView = (ImageView) card.findViewById(R.id.image);
         }
     }
 }
