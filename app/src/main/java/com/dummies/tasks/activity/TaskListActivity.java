@@ -3,7 +3,6 @@ package com.dummies.tasks.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toolbar;
-
 import com.dummies.tasks.R;
 
 public class TaskListActivity extends AppCompatActivity {
@@ -15,6 +14,5 @@ public class TaskListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setActionBar(toolbar);
     }
-
 
 }
