@@ -96,7 +96,8 @@ public class TaskEditFragment extends Fragment {
                         Bitmap bitmap = ((BitmapDrawable) imageView
                         .getDrawable())
                                 .getBitmap();
-                        Palette palette = Palette.generate(bitmap, 32);
+                        Palette.Builder builder = new Palette.Builder(bitmap);
+                        Palette palette = builder.generate();
                         int bgColor = palette.getLightMutedColor(0);
 
                         if (bgColor != 0) {
