@@ -10,4 +10,6 @@
     <string name="notes">Notizen</string>
     <string name="menu_insert">Task hinzufügen</string>
     <string name="confirm">Speichern</string>
+    <string name="delete_q">Löschen?</string>
+    <string name="delete">Löschen</string>
 </resources>

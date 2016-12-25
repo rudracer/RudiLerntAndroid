@@ -3,8 +3,11 @@ package com.dummies.tasks.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, final int i) {
+    public void onBindViewHolder(final ViewHolder viewHolder, final int i) {
         final Context context = viewHolder.titleView.getContext();
 
         viewHolder.titleView.setText(fakeData[i]);
@@ -60,6 +63,33 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                     }
                 }
         );
+
+        viewHolder.cardView.setOnLongClickListener(
+                new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+
+                        new AlertDialog.Builder(context) //7
+                        .setTitle(R.string.delete_q) //8
+                        .setMessage(viewHolder.titleView.getText()) //9
+                        .setCancelable(true) //10
+                        .setNegativeButton(android.R.string.cancel, null) //11
+                        .setPositiveButton(R.string.delete,  //12
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        deleteTask(context, i); //20
+                                    }
+                                })
+                                .show(); //23
+                        return true;
+                    }
+                }
+        );
+    }
+
+    void deleteTask(Context context, long id) {
+        Log.d("TaskListAdapter", "Called deleteTask");
     }
 
     private Activity getActivity(Context context) {
