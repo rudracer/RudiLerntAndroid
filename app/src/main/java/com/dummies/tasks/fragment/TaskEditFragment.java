@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
+import com.dummies.tasks.adapter.TaskListAdapter;
+import com.squareup.picasso.Picasso;
 
 /**
  * Created by Rudi on 25.12.2016.
@@ -28,6 +30,14 @@ public class TaskEditFragment extends Fragment {
     ImageView imageView;
 
     long taskId;
+
+    public static TaskEditFragment newInstance(long id) {
+        TaskEditFragment fragment = new TaskEditFragment();
+        Bundle args = new Bundle();
+        args.putLong(TaskEditActivity.EXTRA_TASKID, id);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,6 +74,11 @@ public class TaskEditFragment extends Fragment {
         titleText = (EditText) v.findViewById(R.id.title);
         notesText = (EditText) v.findViewById(R.id.notes);
         imageView = (ImageView) v.findViewById(R.id.image);
+
+        //Miniaturbild festlegen
+        Picasso.with(getActivity())
+                .load(TaskListAdapter.getImageUrlForTask(taskId))
+                .into(imageView);
 
         return v;
     }

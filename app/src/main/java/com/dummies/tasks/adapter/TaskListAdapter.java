@@ -72,7 +72,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
         return null;
     }
 
-    private static String getImageUrlForTask(long taskId) {
+    public static String getImageUrlForTask(long taskId) {
         return "http://lorempixel.com/600/400/cats/" + taskId%10;
     }
 
