@@ -1,6 +1,8 @@
 package com.dummies.tasks.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -54,10 +56,20 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ((OnEditTask) context).editTask(i);
+                        ((OnEditTask) getActivity(context)).editTask(i);
                     }
                 }
         );
+    }
+
+    private Activity getActivity(Context context) {
+        while (context instanceof ContextWrapper) {
+            if (context instanceof Activity) {
+                return (Activity)context;
+            }
+            context = ((ContextWrapper)context).getBaseContext();
+        }
+        return null;
     }
 
     private static String getImageUrlForTask(long taskId) {
