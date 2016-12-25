@@ -1,7 +1,11 @@
 package com.dummies.tasks.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +15,7 @@ import android.widget.ImageView;
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
 import com.dummies.tasks.adapter.TaskListAdapter;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -78,7 +83,32 @@ public class TaskEditFragment extends Fragment {
         //Miniaturbild festlegen
         Picasso.with(getActivity())
                 .load(TaskListAdapter.getImageUrlForTask(taskId))
-                .into(imageView);
+                .into(imageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Activity activity = getActivity();
+
+                        if (activity == null) {
+                            return;
+                        }
+
+                        //Farben der Aktivität auf den Farben des Bildes setzen, falls verfügbar
+                        Bitmap bitmap = ((BitmapDrawable) imageView
+                        .getDrawable())
+                                .getBitmap();
+                        Palette palette = Palette.generate(bitmap, 32);
+                        int bgColor = palette.getLightMutedColor(0);
+
+                        if (bgColor != 0) {
+                            rootView.setBackgroundColor(bgColor);
+                        }
+                    }
+
+                    @Override
+                    public void onError() {
+                        //Nichts machen; wir verwenden die Standardfarben
+                    }
+                });
 
         return v;
     }
