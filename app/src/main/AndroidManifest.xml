@@ -21,8 +21,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:theme="@style/AppTheme.TransparentActionBar"
             android:name=".activity.TaskEditActivity"
-            android:label="@string/title_activity_task_edit"
+            android:label=""
             android:parentActivityName=".activity.TaskListActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
