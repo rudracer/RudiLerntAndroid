@@ -17,6 +17,8 @@ import com.dummies.tasks.activity.TaskEditActivity;
 
 public class TaskEditFragment extends Fragment {
 
+    static final String TASK_ID = "taskId";
+
     public static final String DEFAULT_FRAGMENT_TAG = "taskEditFragment";
 
     //Views
@@ -35,6 +37,22 @@ public class TaskEditFragment extends Fragment {
         if (arguments != null) {
             taskId = arguments.getLong(TaskEditActivity.EXTRA_TASKID, 0L);
         }
+
+        if (savedInstanceState != null) {
+            taskId = savedInstanceState.getLong(TASK_ID);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        /*
+        Dieses Feld kann sich geänder haben, während
+        unsere Aktivität ausgeführt wurde, wir müssen also sicherstellen,
+        dass wir sie in unserem outState-Bundle speichern, sodass wir sie
+        später in onCreate wiederherstellen können.
+         */
+        outState.putLong(TASK_ID, taskId);
     }
 
     @Override
