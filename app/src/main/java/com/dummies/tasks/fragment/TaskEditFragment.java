@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
 import com.dummies.tasks.adapter.TaskListAdapter;
+import com.dummies.tasks.interfaces.OnEditFinished;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

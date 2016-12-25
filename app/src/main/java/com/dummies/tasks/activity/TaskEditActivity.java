@@ -7,8 +7,9 @@ import android.widget.Toolbar;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.fragment.TaskEditFragment;
+import com.dummies.tasks.interfaces.OnEditFinished;
 
-public class TaskEditActivity extends Activity {
+public class TaskEditActivity extends Activity implements OnEditFinished {
 
     public static final String EXTRA_TASKID = "taskId";
 
@@ -28,6 +29,14 @@ public class TaskEditActivity extends Activity {
                     fragment,
                     fragmentTag).commit();
         }
+    }
+
+    @Override
+    public void finishEditingTask() {
+        /* Wenn der Benutzer den Editor schließt,
+        finish aufrufen, um die Aktivität zu zerstören.
+         */
+        finish();
     }
 
 }
