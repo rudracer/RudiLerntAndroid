@@ -8,11 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.adapter.TaskListAdapter;
+import com.dummies.tasks.interfaces.OnEditTask;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +61,16 @@ public class TaskListFragment extends Fragment {
         return v;
         // Inflate the layout for this fragment
         //return inflater.inflate(R.layout.fragment_task_list2, container, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_insert:
+                ((OnEditTask) getActivity()).editTask(0);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 
