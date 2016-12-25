@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Unser Standardmenü, das wir in der Aktionsleiste unserer Haupt-Aktivität laden -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Die Einfügen-Schaltfläche zum Erstellen eines neuen Tasks.
+    Diese Schaltfläche ist wichtig und klein, deshalb können wir festlegen, dass sie immer
+    in der Aktionsleiste angezeigt werden soll. Im Allgemeinen sollten Sie versuchen, so wenig
+    wie möglich Elemente mit showAsAction=always zu konfigurieren.
+    Wir verwenden die Hinzufügen-Standardschaltfläche, die in Android integriert ist.
+    Wenn Sie sehen möchten, welche anderen Drawables Android enthält, lesen sie unter
+    $ANDROID_SDK/platforms/android-*/res/drawable-* nach -->
+    <item
+        android:id="@+id/menu_insert"
+        android:icon="@android:drawable/ic_menu_add"
+        android:showAsAction="always"
+        android:title="@string/menu_insert"/>
+</menu>
