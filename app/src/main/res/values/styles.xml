@@ -30,7 +30,7 @@
         <item name="android:actionBarStyle">@style/AppTheme.TransparentActionBar</item>
     </style>
 
-    <!-- Der TransparentActionBar-Stil für AppTheme.TransparentActionBar -->
+    <!-- Der TransparentActionBar-Stil für AppTheme.TransparentActionBar  -->
     <style name="TransparentActionBar" parent="android:Theme.Material">
         <item name="android:background">@android:color/transparent</item>
     </style>
