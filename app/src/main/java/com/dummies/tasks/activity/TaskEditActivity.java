@@ -15,7 +15,6 @@ public class TaskEditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_edit);
         setActionBar((Toolbar) findViewById(R.id.toolbar));
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }
