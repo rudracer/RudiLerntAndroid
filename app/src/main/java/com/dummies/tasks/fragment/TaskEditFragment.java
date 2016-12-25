@@ -7,6 +7,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -23,6 +26,8 @@ import com.squareup.picasso.Picasso;
  */
 
 public class TaskEditFragment extends Fragment {
+
+    private static final int MENU_SAVE = 1;
 
     static final String TASK_ID = "taskId";
 
@@ -112,5 +117,32 @@ public class TaskEditFragment extends Fragment {
                 });
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.add(0, MENU_SAVE, 0, R.string.confirm)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            //Speichern-Schaltfläche wurde gedrückt
+            case MENU_SAVE:
+                //save();
+
+                ((OnEditFinished) getActivity()).finishEditingTask();
+
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
