@@ -35,4 +35,7 @@
         <item name="android:background">@android:color/transparent</item>
     </style>
 
+    <!-- Style für den Langklickdialog -->
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert" />
+
 </resources>

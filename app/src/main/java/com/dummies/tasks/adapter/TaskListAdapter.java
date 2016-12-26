@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.FrameLayout;
 
 import com.dummies.tasks.R;
+import com.dummies.tasks.activity.TaskListActivity;
 import com.dummies.tasks.interfaces.OnEditTask;
 import com.squareup.picasso.Picasso;
 //import android.R;
@@ -69,7 +70,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                     @Override
                     public boolean onLongClick(View view) {
 
-                        new AlertDialog.Builder(context) //7
+                        new AlertDialog.Builder(getActivity(context), R.style.MyDialogTheme) //7
                         .setTitle(R.string.delete_q) //8
                         .setMessage(viewHolder.titleView.getText()) //9
                         .setCancelable(true) //10
@@ -78,7 +79,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        deleteTask(context, i); //20
+                                        deleteTask(getActivity(context), i); //20
                                     }
                                 })
                                 .show(); //23
@@ -89,7 +90,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     void deleteTask(Context context, long id) {
-        Log.d("TaskListAdapter", "Called deleteTask");
+        Log.d("TaskListAdapter", "Wir haben deleteTask aufgerufen :D");
     }
 
     private Activity getActivity(Context context) {
