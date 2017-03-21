@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
@@ -21,6 +22,9 @@ import com.dummies.tasks.adapter.TaskListAdapter;
 import com.dummies.tasks.interfaces.OnEditFinished;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.text.DateFormat;
+import java.util.Calendar;
 
 /**
  * Created by Rudi on 25.12.2016.
@@ -31,6 +35,7 @@ public class TaskEditFragment extends Fragment {
     private static final int MENU_SAVE = 1;
 
     static final String TASK_ID = "taskId";
+    static final String TASK_DATE_AND_TIME = "taskDateAndTime";
 
     public static final String DEFAULT_FRAGMENT_TAG = "taskEditFragment";
 
@@ -39,8 +44,13 @@ public class TaskEditFragment extends Fragment {
     EditText titleText;
     EditText notesText;
     ImageView imageView;
+    TextView dateButton;
+    TextView timeButton;
 
+    //Informationen über diesen Task, den wir hier speichern,
+    //bis wir ihn in der Datenbank speichern
     long taskId;
+    Calendar taskDateAndTime;
 
     public static TaskEditFragment newInstance(long id) {
         TaskEditFragment fragment = new TaskEditFragment();
@@ -61,6 +71,12 @@ public class TaskEditFragment extends Fragment {
 
         if (savedInstanceState != null) {
             taskId = savedInstanceState.getLong(TASK_ID);
+            //Datum wiederherstellen
+            taskDateAndTime = (Calendar) savedInstanceState.getSerializable(TASK_DATE_AND_TIME);
+        }
+        //Wenn kein vorheriges Datum, "now" verwenden
+        if (taskDateAndTime == null) {
+            taskDateAndTime = Calendar.getInstance();
         }
     }
 
@@ -68,12 +84,14 @@ public class TaskEditFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         /*
-        Dieses Feld kann sich geänder haben, während
+        Dieses Feld kann sich geändert haben, während
         unsere Aktivität ausgeführt wurde, wir müssen also sicherstellen,
         dass wir sie in unserem outState-Bundle speichern, sodass wir sie
         später in onCreate wiederherstellen können.
          */
         outState.putLong(TASK_ID, taskId);
+        outState.putSerializable(TASK_DATE_AND_TIME, taskDateAndTime);
+
     }
 
     @Override
@@ -81,10 +99,16 @@ public class TaskEditFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_task_edit, container, false);
 
+        //Aus dem Layout Views abrufen, die wir verwenden werden
         rootView = v.getRootView();
         titleText = (EditText) v.findViewById(R.id.title);
         notesText = (EditText) v.findViewById(R.id.notes);
         imageView = (ImageView) v.findViewById(R.id.image);
+        dateButton = (TextView) v.findViewById(R.id.task_date);
+        timeButton = (TextView) v.findViewById(R.id.task_time);
+
+        updateDateAndTimeButtons();
+
 
         //Miniaturbild festlegen
         Picasso.with(getActivity())
@@ -145,5 +169,24 @@ public class TaskEditFragment extends Fragment {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Diese Methode aufrufen, wenn sich Datum/Zeit des Tasks geändert haben und wir
+     * unsere Datums- und Zeitschaltflächen aktualisieren müssen.
+     */
+    private void updateDateAndTimeButtons() {
+        /**
+         *  Text für die Zeitschaltfläche sicherstellen
+         *  Sicherstellen, dass nachfolgend java.text.DateFormat importiert wird
+         */
+        DateFormat timeFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+        String timeForButton = timeFormat.format(taskDateAndTime.getTime());
+        timeButton.setText(timeForButton);
+
+        //Text für Datumsschaltfläche festlegen
+        DateFormat dateFormat = DateFormat.getTimeInstance();
+        String dateForButton = dateFormat.format(taskDateAndTime.getTime());
+        dateButton.setText(dateForButton);
     }
 }
