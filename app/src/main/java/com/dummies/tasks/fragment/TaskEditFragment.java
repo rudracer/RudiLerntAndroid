@@ -244,12 +244,12 @@ public class TaskEditFragment extends Fragment
          *  Text für die Zeitschaltfläche sicherstellen
          *  Sicherstellen, dass nachfolgend java.text.DateFormat importiert wird
          */
-        DateFormat timeFormat = DateFormat.getTimeInstance();
+        DateFormat timeFormat = DateFormat.getTimeInstance(DateFormat.SHORT);
         String timeForButton = timeFormat.format(taskDateAndTime.getTime());
         timeButton.setText(timeForButton);
 
         //Text für Datumsschaltfläche festlegen
-        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT);
+        DateFormat dateFormat = DateFormat.getDateInstance();
         String dateForButton = dateFormat.format(taskDateAndTime.getTime());
         dateButton.setText(dateForButton);
     }
