@@ -2,6 +2,7 @@ package com.dummies.tasks.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -109,6 +110,26 @@ public class TaskEditFragment extends Fragment {
 
         updateDateAndTimeButtons();
 
+        //Teilt den Datums- und Zeitschaltflächen mit, was sie tun sollen,
+        //wenn sie angeklickt werden
+        dateButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showDatePicker();
+                    }
+                }
+        );
+
+        timeButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showTimePicker();
+                    }
+                }
+        );
+
 
         //Miniaturbild festlegen
         Picasso.with(getActivity())
@@ -142,6 +163,25 @@ public class TaskEditFragment extends Fragment {
                 });
 
         return v;
+    }
+
+    //Hilfsmethode, die unseren Datumswähler anzeigt
+    private void showDatePicker() {
+        //Eine Fragment-Transaktion erstellen
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        DatePickerDialogFragment newFragment = DatePickerDialogFragment.newInstance(taskDateAndTime);
+
+        newFragment.show(ft, "datePicker");
+    }
+
+    private void showTimePicker() {
+        //Eine Fragment-Transaktion erstellen
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        TimePickerDialogFragment fragment = TimePickerDialogFragment.newInstance(taskDateAndTime);
+
+        fragment.show(ft, "timePicker");
     }
 
     @Override
