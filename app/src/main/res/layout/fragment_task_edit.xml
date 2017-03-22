@@ -25,25 +25,25 @@
             android:layout_below="@id/image"
             android:hint="@string/title" />
 
-        <!-- Die Zeit-Schaltfläche -->
-        <TextView
-            style="@android:style/TextAppearance.Medium"
-            android:id="@+id/task_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/title"
-            android:layout_alignEnd="@id/title"
-            android:layout_marginEnd="3dp"/>
-
         <!-- Die Datum-Schaltfläche -->
         <TextView
             style="@android:style/TextAppearance.Medium"
             android:id="@+id/task_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toStartOf="@id/task_time"
-            android:layout_alignBottom="@id/task_time"
+            android:layout_below="@id/title"
+            android:layout_alignEnd="@id/title"
             android:layout_marginEnd="10dp"/>
+
+        <!-- Die Zeit-Schaltfläche -->
+        <TextView
+            style="@android:style/TextAppearance.Medium"
+            android:id="@+id/task_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/task_date"
+            android:layout_alignBottom="@id/task_date"
+            android:layout_marginEnd="3dp"/>
 
         <EditText
             android:id="@+id/notes"
