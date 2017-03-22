@@ -1,11 +1,14 @@
 package com.dummies.tasks.activity;
 
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.app.Activity;
 import android.widget.Toolbar;
 
 import com.dummies.tasks.R;
+import com.dummies.tasks.fragment.SaveAlertDialogFragment;
 import com.dummies.tasks.fragment.TaskEditFragment;
 import com.dummies.tasks.interfaces.OnEditFinished;
 
@@ -33,10 +36,17 @@ public class TaskEditActivity extends Activity implements OnEditFinished {
 
     @Override
     public void finishEditingTask() {
+        //"Sind Sie sicher, dass Sie speichern wollen?"-Dialog aufrufen
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+        DialogFragment newFragment = new SaveAlertDialogFragment();
+        newFragment.show(ft, "alertDialog");
+
         /* Wenn der Benutzer den Editor schließt,
         finish aufrufen, um die Aktivität zu zerstören.
          */
-        finish();
+        //finish auslagern in dialog
+
+        //finish();
     }
 
 }

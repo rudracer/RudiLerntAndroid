@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.dummies.tasks.interfaces.OnEditFinished;
+
 /**
  * Created by Rudi on 22.03.2017.
  */
@@ -24,6 +26,7 @@ public class SaveAlertDialogFragment extends DialogFragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 //Aktionen durchführen
                                 System.out.println("Hihi, speichern :D");
+                                getActivity().finish();
                             }
                         })
                 .setNegativeButton("Nein",
