@@ -1,8 +1,10 @@
 package com.dummies.tasks.fragment;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -13,9 +15,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
@@ -31,7 +35,8 @@ import java.util.Calendar;
  * Created by Rudi on 25.12.2016.
  */
 
-public class TaskEditFragment extends Fragment {
+public class TaskEditFragment extends Fragment
+        implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private static final int MENU_SAVE = 1;
 
@@ -59,6 +64,25 @@ public class TaskEditFragment extends Fragment {
         args.putLong(TaskEditActivity.EXTRA_TASKID, id);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    //Dies ist die Methode, die unser DatePicker-Dialog aufruft, wenn der Benuntzer im Dialog ein
+    //Datum auswählt:
+    @Override
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        taskDateAndTime.set(Calendar.YEAR, year);
+        taskDateAndTime.set(Calendar.MONTH, month);
+        taskDateAndTime.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        updateDateAndTimeButtons();
+    }
+
+    //Dies ist die Methode, die unser TimePicker-Dialog aufruft, wenn der Benuntzer im Dialog eine
+    //Zeit auswählt:
+    @Override
+    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+        taskDateAndTime.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        taskDateAndTime.set(Calendar.MINUTE, minute);
+        updateDateAndTimeButtons();
     }
 
     @Override
