@@ -44,6 +44,6 @@ public class TimePickerDialogFragment extends DialogFragment {
         Bundle args = getArguments();
         return new TimePickerDialog(getActivity(), listener,
                 args.getInt(HOUR),
-                args.getInt(MINS),false);
+                args.getInt(MINS),true);
     }
 }
