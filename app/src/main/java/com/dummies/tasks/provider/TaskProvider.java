@@ -6,9 +6,11 @@ import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.os.CancellationSignal;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -137,6 +139,44 @@ public class TaskProvider extends ContentProvider {
         }
 
         return count;
+    }
+
+    @Nullable
+    @Override
+    public Cursor query(@NonNull Uri uri, @Nullable String[] ignored1, @Nullable String selection,
+                        @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        String[] projection = new String[] {
+                COLUMN_TASKID,
+                COLUMN_TITLE,
+                COLUMN_NOTES,
+                COLUMN_DATE_TIME
+        };
+
+        Cursor c;
+        switch (URI_MATCHER.match(uri)) {
+            case LIST_TASK:
+                c = db.query(DATABASE_TABLE, projection, selection, selectionArgs, null, null,
+                        sortOrder);
+                break;
+
+            case ITEM_TASK:
+                c = db.query(DATABASE_TABLE, projection, COLUMN_TASKID + "=?",
+                        new String[]{
+                                Long.toString(ContentUris.parseId(uri))
+                        },
+                        null, null, null, null);
+                if (c.getCount() > 0) {
+                    c.moveToFirst();
+                }
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown Uri: " + uri);
+        }
+
+        c.setNotificationUri(getContext().getContentResolver(), uri);
+
+        return c;
     }
 
     protected static class DatabaseHelper extends SQLiteOpenHelper {
