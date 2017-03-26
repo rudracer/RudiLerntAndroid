@@ -2,11 +2,15 @@ package com.dummies.tasks.provider;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.net.URI;
 
@@ -77,6 +81,19 @@ public class TaskProvider extends ContentProvider {
         //Eine Verbindung zu unserer Datenbank einrichten
         db = new DatabaseHelper(getContext()).getWritableDatabase();
         return true;
+    }
+
+    @Nullable
+    @Override
+    public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
+        //Sie können keine eigene Task-ID wählen
+        if (values.containsKey(COLUMN_TASKID)) {
+            throw new UnsupportedOperationException();
+        }
+
+        long id = db.insertOrThrow(DATABASE_TABLE, null, values);
+        getContext().getContentResolver().notifyChange(uri, null);
+        return ContentUris.withAppendedId(uri, id);
     }
 
     protected static class DatabaseHelper extends SQLiteOpenHelper {
