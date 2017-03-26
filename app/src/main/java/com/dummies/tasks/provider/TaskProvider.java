@@ -96,6 +96,29 @@ public class TaskProvider extends ContentProvider {
         return ContentUris.withAppendedId(uri, id);
     }
 
+    /**
+     * Diese Methode wird aufgerufen, wenn jemand etwas in unserem
+     * ContentProvider aktualisieren will.
+     */
+    @Override
+    public int update(@NonNull Uri uri, @Nullable ContentValues values,
+                      @Nullable String ignored1, @Nullable String[] ignored2) {
+        //Task-ID kann nicht geändert werden
+        if (values.containsKey(COLUMN_TASKID)) {
+            throw new UnsupportedOperationException();
+        }
+        int count = db.update(
+                DATABASE_TABLE,
+                values,
+                COLUMN_TASKID + "=?",
+                new String[]{Long.toString(ContentUris.parseId(uri))});
+        if (count > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return count;
+    }
+
     protected static class DatabaseHelper extends SQLiteOpenHelper {
         static final String DATEBASE_CREATE =
                 "create table " + DATABASE_TABLE + " (" +
