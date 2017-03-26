@@ -1,12 +1,14 @@
 package com.dummies.tasks.provider;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.content.UriMatcher;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+
+import java.net.URI;
 
 /**
  * Created by Rudi on 26.03.2017.
@@ -27,6 +29,48 @@ public class TaskProvider extends ContentProvider {
 
     //Die eigentliche Datenbank
     SQLiteDatabase db;
+
+    //Content Provider Uri und Quelle
+    public static final String AUTHORITY
+            = "com.dummies.tasks.provider.TaskProvider";
+    public static final Uri CONTENT_URI
+            = Uri.parse("content://" + AUTHORITY + "/task");
+
+    //MIME-Typen für die Auflistung von Tasks oder
+    //die Suche nach einem einzelnen Task
+    private static final String TASKS_MIME_TYPE
+            = ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd.com.dummies.tasks.tasks";
+    private static final String TASK_MIME_TYPE
+            = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd.com.dummies.tasks.task";
+    //UriMatcher-Schnickschnack
+    private static final int LIST_TASK = 0;
+    private static final int ITEM_TASK = 1;
+    private static final UriMatcher URI_MATCHER = buildUriMatcher();
+
+    /**
+     * Erzeugt einen UriMatcher für Suchvorschläge und abkürzende Aktualisierungsanfragen.
+     */
+    private static UriMatcher buildUriMatcher() {
+        UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+        matcher.addURI(AUTHORITY, "task", LIST_TASK);
+        matcher.addURI(AUTHORITY, "task/#", ITEM_TASK);
+        return matcher;
+    }
+
+    /**
+     * Diese Methode wird benötogt, um die unterstützten Typen abzufragen.
+     */
+    @Override
+    public String getType(Uri uri) {
+        switch (URI_MATCHER.match(uri)) {
+            case LIST_TASK:
+                return TASKS_MIME_TYPE;
+            case ITEM_TASK:
+                return TASK_MIME_TYPE;
+            default:
+                throw new IllegalArgumentException("Unknown Uri: " + uri);
+        }
+    }
 
     @Override
     public boolean onCreate() {
