@@ -119,6 +119,26 @@ public class TaskProvider extends ContentProvider {
         return count;
     }
 
+
+    /**
+     * Diese Methode wird aufgerufen, wenn jemand etwas aus
+     * unserem ContentProvider löschen will.
+     */
+    @Override
+    public int delete(@NonNull Uri uri, @Nullable String ignored1, @Nullable String[] ignored2) {
+        int count = db.delete(
+                DATABASE_TABLE,
+                COLUMN_TASKID + "=?",
+                new String[]{Long.toString(ContentUris.parseId(uri))}
+        );
+
+        if (count > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+
+        return count;
+    }
+
     protected static class DatabaseHelper extends SQLiteOpenHelper {
         static final String DATEBASE_CREATE =
                 "create table " + DATABASE_TABLE + " (" +
