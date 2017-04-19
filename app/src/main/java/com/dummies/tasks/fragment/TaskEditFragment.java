@@ -5,8 +5,11 @@ import android.app.DatePickerDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TimePickerDialog;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.view.LayoutInflater;
@@ -20,11 +23,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.dummies.tasks.R;
 import com.dummies.tasks.activity.TaskEditActivity;
 import com.dummies.tasks.adapter.TaskListAdapter;
 import com.dummies.tasks.interfaces.OnEditFinished;
+import com.dummies.tasks.provider.TaskProvider;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -226,12 +231,14 @@ public class TaskEditFragment extends Fragment
         switch (item.getItemId()) {
             //Speichern-Schaltfläche wurde gedrückt
             case MENU_SAVE:
-                //save();
+                save();
 
-                ((OnEditFinished) getActivity()).finishEditingTask();
+                //((OnEditFinished) getActivity()).finishEditingTask(); //Später vielleicht
 
                 return true;
         }
+        //Wenn wir dieses Menüelement nicht verarbeiten können, prüfen, ob die
+        //übergeordnete Routine das kann
         return super.onOptionsItemSelected(item);
     }
 
@@ -252,5 +259,43 @@ public class TaskEditFragment extends Fragment
         DateFormat dateFormat = DateFormat.getDateInstance();
         String dateForButton = dateFormat.format(taskDateAndTime.getTime());
         dateButton.setText(dateForButton);
+    }
+
+    private void save() {
+        //Alle vom Benutzer eingegebenen Werte in ein ContentValues-Objekt einfügen
+        String title = titleText.getText().toString();
+        ContentValues values = new ContentValues();
+        values.put(TaskProvider.COLUMN_TITLE, title);
+        values.put(TaskProvider.COLUMN_NOTES,
+                notesText.getText().toString());
+
+        values.put(TaskProvider.COLUMN_DATE_TIME,
+                taskDateAndTime.getTimeInMillis());
+
+        //taskId == 0, wenn wir einen neuen Task erstellen, andernfalls die id des zu
+        //bearbeitenden Tasks.
+        if (taskId == 0) {
+            //Den neuen Task erstellen und die taskId auf die Id des neuen Tasks setzen.
+            Uri itemUri = getActivity().getContentResolver()
+                    .insert(TaskProvider.CONTENT_URI, values);
+            taskId = ContentUris.parseId(itemUri);
+
+        } else {
+            //Vorhandenen Task aktualisieren
+            Uri uri = ContentUris.withAppendedId(TaskProvider.CONTENT_URI, taskId);
+            int count = getActivity().getContentResolver().update(
+                    uri, values, null, null);
+
+            //Wenn wir irgendwie nicht genau einen Task bearbeitet haben, einen Fehler werfen
+            if (count != 1) {
+                throw new IllegalStateException("Aktualisieren nicht möglich: " + taskId);
+            }
+
+        }
+
+        Toast.makeText(
+                getActivity(),
+                getString(R.string.task_saved_message),
+                Toast.LENGTH_SHORT).show();
     }
 }
